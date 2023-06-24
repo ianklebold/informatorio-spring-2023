@@ -3,12 +3,11 @@ package com.info.javajediprimerapp.controller;
 import com.info.javajediprimerapp.domain.Book;
 import com.info.javajediprimerapp.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController //Anotacion a nivel de clase
 public class BookController {
@@ -33,5 +32,20 @@ public class BookController {
     public Book createBook(@RequestBody Book book){
         return bookService.createBook(book);
     }
+
+    //PUT --> Actualizar un recurso
+    @PutMapping("/api/v1/book/{idBook}")
+    public String updateBook(@PathVariable(value = "idBook")UUID idBook,@RequestBody Book bookUpdated){
+        Optional<Book> book = bookService.updateBook(idBook,bookUpdated);
+
+        if(book.isEmpty()){
+            System.out.println("Book not found");
+            return "Book not found";
+        }else {
+            System.out.println("Book updated");
+            return "/api/v1/book/"+book.get().getUuid();
+        }
+    }
+
 
 }
