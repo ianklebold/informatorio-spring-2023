@@ -44,4 +44,22 @@ public class BookServiceImpl implements BookService {
         bookMap.put(book.getUuid(),book);
         return book;
     }
+
+    @Override
+    public Optional<Book> updateBook(UUID uuid,Book bookUpdated) {
+
+        Book book = bookMap.get(uuid);
+
+        if (book != null){
+            if (bookUpdated.getTitle() != null){
+                book.setTitle(bookUpdated.getTitle());
+            }
+            if (bookUpdated.getTitle() != null){
+                book.setAuthor(bookUpdated.getAuthor());
+            }
+            return Optional.of(book);
+        }else {
+            return Optional.empty();
+        }
+    }
 }
