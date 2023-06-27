@@ -1,7 +1,7 @@
 package com.info.javajediprimerapp.controller;
 
 import com.info.javajediprimerapp.domain.Book;
-import com.info.javajediprimerapp.service.BookService;
+import com.info.javajediprimerapp.service.book.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,6 +46,4 @@ public class BookController {
             return "/api/v1/book/"+book.get().getUuid();
         }
     }
-
-
 }

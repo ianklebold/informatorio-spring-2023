@@ -1,4 +1,4 @@
-package com.info.javajediprimerapp.service;
+package com.info.javajediprimerapp.service.book;
 
 import com.info.javajediprimerapp.domain.Book;
 

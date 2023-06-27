@@ -1,7 +1,7 @@
-package com.info.javajediprimerapp.service.impl;
+package com.info.javajediprimerapp.service.book.impl;
 
 import com.info.javajediprimerapp.domain.Book;
-import com.info.javajediprimerapp.service.BookService;
+import com.info.javajediprimerapp.service.book.BookService;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
