@@ -70,5 +70,13 @@ public class BookServiceImpl implements BookService {
 
     }
 
-
+    private boolean deleteBookByName(String title) {
+        for (Book book : bookMap.values()) {
+            if (book.getTitle().equalsIgnoreCase(title)) {
+                bookMap.values().remove(book);
+                return true;
+            }
+        }
+        return false;
+    }
 }
