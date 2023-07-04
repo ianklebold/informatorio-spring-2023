@@ -1,8 +1,8 @@
-package com.info.javajediprimerapp.service.impl;
+package com.info.javajediprimerapp.service.book.impl;
 
 import com.info.javajediprimerapp.domain.Book;
 import com.info.javajediprimerapp.repository.book.BookRepository;
-import com.info.javajediprimerapp.service.BookService;
+import com.info.javajediprimerapp.service.book.BookService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;

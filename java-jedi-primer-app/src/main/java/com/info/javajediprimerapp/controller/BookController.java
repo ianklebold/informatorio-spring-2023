@@ -1,7 +1,7 @@
 package com.info.javajediprimerapp.controller;
 
 import com.info.javajediprimerapp.domain.Book;
-import com.info.javajediprimerapp.service.BookService;
+import com.info.javajediprimerapp.service.book.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController //Anotacion a nivel de clase
+@RequestMapping("/api/v1/book") //Todos los endpoints comparten esta URI
 public class BookController {
 
     //IoC Inversion de control
@@ -21,20 +22,20 @@ public class BookController {
     }
 
     //GET --> Obtener un recurso
-    @GetMapping("/api/v1/book")
+    @GetMapping()
     public List<Book> getAllBooks(){
 
         return bookService.getAllBooks();
     }
 
     //POST --> Crear un recurso
-    @PostMapping("/api/v1/book")
+    @PostMapping()
     public Book createBook(@RequestBody Book book){
         return bookService.createBook(book);
     }
 
     //PUT --> Actualizar un recurso
-    @PutMapping("/api/v1/book/{idBook}")
+    @PutMapping("/{idBook}")
     public String updateBook(@PathVariable(value = "idBook")UUID idBook,@RequestBody Book bookUpdated){
         Optional<Book> book = bookService.updateBook(idBook,bookUpdated);
 
