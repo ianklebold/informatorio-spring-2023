@@ -48,7 +48,7 @@ public class BookController {
     }
 
     //Delete --> Eliminar un recurso
-    @PutMapping("/api/v1/book/{idBook}")
+    @DeleteMapping("/api/v1/book/{idBook}")
     public String deleteBook(@PathVariable(value = "idBook")UUID idBook){
         boolean isBookDeleted = bookService.deleteBook(idBook);
 
