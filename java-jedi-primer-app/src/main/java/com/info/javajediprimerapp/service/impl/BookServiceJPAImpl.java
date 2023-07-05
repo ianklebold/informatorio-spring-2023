@@ -57,10 +57,10 @@ public class BookServiceJPAImpl implements BookService {
 
     }
 
-    private boolean deleteBookByName(String title) {
-        Optional<Book> bookOptional = bookRepository.findBookByTitleEqualsIgnoreCase(title);
-        if (bookOptional.isPresent()){
-            bookRepository.delete(bookOptional.get());
+    @Override
+    public boolean deleteBook(UUID uuidBook) {
+        if (bookRepository.existsById(uuidBook)){
+            bookRepository.deleteById(uuidBook);
             return true;
         }
         return false;

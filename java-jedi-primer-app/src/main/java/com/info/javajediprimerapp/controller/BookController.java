@@ -47,5 +47,19 @@ public class BookController {
         }
     }
 
+    //Delete --> Eliminar un recurso
+    @PutMapping("/api/v1/book/{idBook}")
+    public String deleteBook(@PathVariable(value = "idBook")UUID idBook){
+        boolean isBookDeleted = bookService.deleteBook(idBook);
+
+        if(isBookDeleted){
+            System.out.println("Book deleted");
+            return "Book deleted";
+        }else {
+            System.out.println("Book not found");
+            return "Book not found";
+        }
+    }
+
 
 }

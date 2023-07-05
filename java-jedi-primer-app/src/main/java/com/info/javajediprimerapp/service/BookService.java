@@ -12,4 +12,6 @@ public interface BookService {
     Book createBook(Book book);
 
     Optional<Book> updateBook(UUID uuidBook, Book bookUpdated);
+
+    boolean deleteBook(UUID uuidBook);
 }
