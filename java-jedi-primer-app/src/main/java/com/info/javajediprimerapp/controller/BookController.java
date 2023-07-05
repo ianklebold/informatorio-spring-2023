@@ -2,6 +2,7 @@ package com.info.javajediprimerapp.controller;
 
 import com.info.javajediprimerapp.domain.Book;
 import com.info.javajediprimerapp.service.BookService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController //Anotacion a nivel de clase
+@RequestMapping("/api/v1/book") //Todos los endpoints comparten esta URI
+@Slf4j
 public class BookController {
 
     //IoC Inversion de control
@@ -21,42 +24,43 @@ public class BookController {
     }
 
     //GET --> Obtener un recurso
-    @GetMapping("/api/v1/book")
+    @GetMapping()
     public List<Book> getAllBooks(){
-
+        log.info("Se esta haciendo una consulta por los libros");
         return bookService.getAllBooks();
     }
 
     //POST --> Crear un recurso
-    @PostMapping("/api/v1/book")
+    @PostMapping()
     public Book createBook(@RequestBody Book book){
+        log.info("Creacion de un nuevo libro");
         return bookService.createBook(book);
     }
 
     //PUT --> Actualizar un recurso
-    @PutMapping("/api/v1/book/{idBook}")
+    @PutMapping("/{idBook}")
     public String updateBook(@PathVariable(value = "idBook")UUID idBook,@RequestBody Book bookUpdated){
         Optional<Book> book = bookService.updateBook(idBook,bookUpdated);
 
         if(book.isEmpty()){
-            System.out.println("Book not found");
+            log.warn("Libro no encontrado");
             return "Book not found";
         }else {
-            System.out.println("Book updated");
+            log.info("Libro actualizado");
             return "/api/v1/book/"+book.get().getUuid();
         }
     }
 
     //Delete --> Eliminar un recurso
-    @DeleteMapping("/api/v1/book/{idBook}")
+    @DeleteMapping("/{idBook}")
     public String deleteBook(@PathVariable(value = "idBook")UUID idBook){
         boolean isBookDeleted = bookService.deleteBook(idBook);
 
         if(isBookDeleted){
-            System.out.println("Book deleted");
+            log.info("Libro no encontrado");
             return "Book deleted";
         }else {
-            System.out.println("Book not found");
+            log.warn("Libro eliminado");
             return "Book not found";
         }
     }

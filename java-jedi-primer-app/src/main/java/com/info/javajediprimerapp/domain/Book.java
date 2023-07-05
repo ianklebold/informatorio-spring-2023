@@ -30,4 +30,9 @@ public class Book {
 
     @Column(length = 40,columnDefinition = "varchar(40)",updatable = true,nullable = false)
     private String author;
+
+    @Column(unique = true)
+    private String isbn;
+
+    private int numberPages;
 }

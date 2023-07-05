@@ -58,6 +58,11 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    @Override
+    public boolean deleteBook(UUID uuidBook) {
+        return false;
+    }
+
     private void updatingBook(Book book,Book bookUpdated){
 
         if (bookUpdated.getTitle() != null){
