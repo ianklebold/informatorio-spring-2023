@@ -63,6 +63,11 @@ public class BookServiceImpl implements BookService {
         return false;
     }
 
+    @Override
+    public Optional<Book> getBookById(UUID uuid) {
+        return Optional.of(bookMap.get(uuid));
+    }
+
     private void updatingBook(Book book,Book bookUpdated){
 
         if (bookUpdated.getTitle() != null){

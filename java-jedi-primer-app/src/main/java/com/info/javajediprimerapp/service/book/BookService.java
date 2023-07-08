@@ -14,4 +14,6 @@ public interface BookService {
     Optional<Book> updateBook(UUID uuidBook, Book bookUpdated);
 
     boolean deleteBook(UUID uuidBook);
+
+    Optional<Book> getBookById(UUID uuid);
 }
