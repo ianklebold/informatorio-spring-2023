@@ -66,4 +66,9 @@ public class BookServiceJPAImpl implements BookService {
         return false;
     }
 
+    @Override
+    public Optional<Book> getBookById(UUID uuidBook) {
+        return Optional.of(bookRepository.findById(uuidBook)).orElse(null);
+    }
+
 }

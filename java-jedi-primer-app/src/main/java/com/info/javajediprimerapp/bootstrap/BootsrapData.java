@@ -1,7 +1,7 @@
 package com.info.javajediprimerapp.bootstrap;
 
 import com.info.javajediprimerapp.domain.Book;
-import com.info.javajediprimerapp.model.BookCsvRecord;
+import com.info.javajediprimerapp.model.csv.BookCsvRecord;
 import com.info.javajediprimerapp.repository.book.BookRepository;
 import com.info.javajediprimerapp.service.csv.book.BookCsvService;
 import lombok.RequiredArgsConstructor;
