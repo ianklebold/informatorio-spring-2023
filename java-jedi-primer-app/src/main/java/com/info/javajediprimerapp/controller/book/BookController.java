@@ -1,4 +1,4 @@
-package com.info.javajediprimerapp.controller;
+package com.info.javajediprimerapp.controller.book;
 
 import com.info.javajediprimerapp.domain.Book;
 import com.info.javajediprimerapp.exceptions.NotFoundException;
@@ -68,10 +68,11 @@ public class BookController {
 
         if(isBookDeleted){
             log.info("Libro no encontrado");
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
+            throw new NotFoundException();
+
         }else {
             log.warn("Libro eliminado");
-            throw new NotFoundException();
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
     }
 

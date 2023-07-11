@@ -1,4 +1,4 @@
-package com.info.javajediprimerapp.model;
+package com.info.javajediprimerapp.model.csv;
 
 import com.opencsv.bean.CsvBindByName;
 import lombok.AllArgsConstructor;

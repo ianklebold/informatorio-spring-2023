@@ -1,6 +1,6 @@
 package com.info.javajediprimerapp.service.csv.book.impl;
 
-import com.info.javajediprimerapp.model.BookCsvRecord;
+import com.info.javajediprimerapp.model.csv.BookCsvRecord;
 import com.info.javajediprimerapp.service.csv.book.BookCsvService;
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.extern.slf4j.Slf4j;
