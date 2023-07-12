@@ -28,9 +28,10 @@ public class BootsrapData implements CommandLineRunner {
     public void run(String... args) throws Exception {
         log.info("Corriendo BootsrapData");
 
-        loadBookData();
+        //loadBookData();
     }
 
+    /*
     private void loadBookData() throws FileNotFoundException {
         if (bookRepository.count() < 100){
             File file = ResourceUtils.getFile("classpath:csvdata/book_data.csv");
@@ -51,6 +52,6 @@ public class BootsrapData implements CommandLineRunner {
                 }
             }
         }
-    }
+    } */
 
 }

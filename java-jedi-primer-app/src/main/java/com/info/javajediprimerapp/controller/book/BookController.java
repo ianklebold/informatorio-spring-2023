@@ -2,6 +2,7 @@ package com.info.javajediprimerapp.controller.book;
 
 import com.info.javajediprimerapp.domain.Book;
 import com.info.javajediprimerapp.exceptions.NotFoundException;
+import com.info.javajediprimerapp.model.dto.book.BookDTO;
 import com.info.javajediprimerapp.service.book.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class BookController {
 
     //POST --> Crear un recurso
     @PostMapping()
-    public ResponseEntity createBook(@RequestBody Book book){
+    public ResponseEntity createBook(@RequestBody BookDTO book) throws NotFoundException {
         log.info("Creacion de un nuevo libro");
         Book bookCreated = bookService.createBook(book);
 
@@ -79,7 +80,7 @@ public class BookController {
     //Por variable --> Informacion en URL
     //Por parametro --> Parametro de la request
     @GetMapping("/{idBook}")
-    public Book getBookById(@PathVariable(value = "idBook") UUID idBook) throws NotFoundException {
+    public BookDTO getBookById(@PathVariable(value = "idBook") UUID idBook) throws NotFoundException {
         return bookService.getBookById(idBook).orElseThrow(NotFoundException::new);
     }
 

@@ -1,7 +1,11 @@
 package com.info.javajediprimerapp.service.book.impl;
 
 import com.info.javajediprimerapp.domain.Book;
+import com.info.javajediprimerapp.mapper.author.AuthorMapper;
+import com.info.javajediprimerapp.mapper.book.BookMapper;
+import com.info.javajediprimerapp.model.dto.book.BookDTO;
 import com.info.javajediprimerapp.service.book.BookService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -10,22 +14,28 @@ import java.util.*;
 public class BookServiceImpl implements BookService {
     Map<UUID,Book> bookMap;
 
-    public BookServiceImpl() {
+    private final BookMapper bookMapper;
+
+    @Autowired
+    public BookServiceImpl(BookMapper bookMapper) {
+
+        this.bookMapper = bookMapper;
+
         bookMap = new HashMap<>();
 
         Book book = new Book();
         book.setUuid(UUID.randomUUID());
-        book.setAuthor("Gabriel Garcia Marquez");
+        //book.setAuthor("Gabriel Garcia Marquez");
         book.setTitle("Cien años de soledad");
 
         Book book2 = new Book();
         book2.setUuid(UUID.randomUUID());
-        book2.setAuthor("George Orwell");
+        //book2.setAuthor("George Orwell");
         book2.setTitle("1984");
 
         Book book3 = new Book();
         book3.setUuid(UUID.randomUUID());
-        book3.setAuthor("Antoine de Saint-Exupery");
+        //book3.setAuthor("Antoine de Saint-Exupery");
         book3.setTitle("El principito");
 
         bookMap.put(book.getUuid(),book);
@@ -39,10 +49,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book createBook(Book book) {
-        book.setUuid(UUID.randomUUID());
-        bookMap.put(book.getUuid(),book);
-        return book;
+    public Book createBook(BookDTO book) {
+        Book newBook = bookMapper.bookDTOtoBook(book);
+        //Queda pendiente agregar autores
+        bookMap.put(newBook.getUuid(),newBook);
+        return newBook;
     }
 
     @Override
@@ -64,8 +75,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Optional<Book> getBookById(UUID uuid) {
-        return Optional.of(bookMap.get(uuid));
+    public Optional<BookDTO> getBookById(UUID uuid) {
+
+        return Optional.of(
+                bookMapper.bookToBookDTO( bookMap.get(uuid) )
+        );
     }
 
     private void updatingBook(Book book,Book bookUpdated){

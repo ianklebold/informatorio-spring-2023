@@ -1,6 +1,11 @@
 package com.info.javajediprimerapp.service.book.impl;
 
+import com.info.javajediprimerapp.domain.Author;
 import com.info.javajediprimerapp.domain.Book;
+import com.info.javajediprimerapp.exceptions.NotFoundException;
+import com.info.javajediprimerapp.mapper.book.BookMapper;
+import com.info.javajediprimerapp.model.dto.book.BookDTO;
+import com.info.javajediprimerapp.repository.author.AuthorRepository;
 import com.info.javajediprimerapp.repository.book.BookRepository;
 import com.info.javajediprimerapp.service.book.BookService;
 import lombok.AllArgsConstructor;
@@ -18,15 +23,27 @@ public class BookServiceJPAImpl implements BookService {
 
     private final BookRepository bookRepository;
 
+    private final BookMapper bookMapper;
+    private final AuthorRepository authorRepository;
+
     @Override
     public List<Book> getAllBooks() {
         return bookRepository.findAll(); //Traer todos los libros
     }
 
     @Override
-    public Book createBook(Book book) {
-        book.setUuid(UUID.randomUUID());
-        return bookRepository.save(book); //Guardar en base de datos
+    public Book createBook(BookDTO book) throws NotFoundException {
+
+        Book newBook = bookMapper.bookDTOtoBook(book);
+
+        Optional<Author> author = authorRepository.findById(UUID.fromString(book.getIdAuthor()));
+
+        if (author.isPresent()){
+            newBook.setAuthor(author.get());
+            return bookRepository.save(newBook);
+        }else {
+            throw new NotFoundException();
+        }
     }
 
     @Override
@@ -66,8 +83,13 @@ public class BookServiceJPAImpl implements BookService {
     }
 
     @Override
-    public Optional<Book> getBookById(UUID uuid) {
-        return Optional.of(bookRepository.findById(uuid)).orElse(null);
+    public Optional<BookDTO> getBookById(UUID uuid) {
+        Optional<Book> bookOptional = bookRepository.findById(uuid);
+
+        if (bookOptional.isPresent()){
+            return Optional.of(bookMapper.bookToBookDTO(bookOptional.get()));
+        }
+        return Optional.empty();
     }
 
 }
