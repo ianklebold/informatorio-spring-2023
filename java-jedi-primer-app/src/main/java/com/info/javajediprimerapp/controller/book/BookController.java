@@ -2,6 +2,7 @@ package com.info.javajediprimerapp.controller.book;
 
 import com.info.javajediprimerapp.domain.Book;
 import com.info.javajediprimerapp.exceptions.NotFoundException;
+import com.info.javajediprimerapp.model.dto.book.BookDTO;
 import com.info.javajediprimerapp.service.book.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,21 +30,27 @@ public class BookController {
 
     //GET --> Obtener un recurso
     @GetMapping()
-    public List<Book> getAllBooks(@RequestParam(required = false,name = "nameBook") String nameBook){
+    public List<BookDTO> getAllBooks(@RequestParam(required = false,name = "nameBook") String nameBook){
         log.info("Se esta haciendo una consulta por los libros");
         return bookService.getAllBooks();
     }
 
     //POST --> Crear un recurso
     @PostMapping()
-    public ResponseEntity createBook(@RequestBody Book book){
+    public ResponseEntity createBook(@RequestBody BookDTO book) throws NotFoundException {
         log.info("Creacion de un nuevo libro");
-        Book bookCreated = bookService.createBook(book);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Location","/api/v1/book/"+bookCreated.getUuid());
+        try {
+            Book bookCreated = bookService.createBook(book);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Location","/api/v1/book/"+bookCreated.getUuid());
 
-        return new ResponseEntity(headers,HttpStatus.CREATED);
+            return new ResponseEntity(headers,HttpStatus.CREATED);
+        } catch (NotFoundException e) {
+            log.warn("Author no encontrado");
+            throw new NotFoundException();
+        }
+
     }
 
     //PUT --> Actualizar un recurso
@@ -79,7 +86,7 @@ public class BookController {
     //Por variable --> Informacion en URL
     //Por parametro --> Parametro de la request
     @GetMapping("/{idBook}")
-    public Book getBookById(@PathVariable(value = "idBook") UUID idBook) throws NotFoundException {
+    public BookDTO getBookById(@PathVariable(value = "idBook") UUID idBook) throws NotFoundException {
         return bookService.getBookById(idBook).orElseThrow(NotFoundException::new);
     }
 

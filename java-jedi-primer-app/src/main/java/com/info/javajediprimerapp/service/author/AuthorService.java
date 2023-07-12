@@ -1,7 +1,7 @@
 package com.info.javajediprimerapp.service.author;
 
 import com.info.javajediprimerapp.domain.Author;
-import com.info.javajediprimerapp.model.dto.AuthorDTO;
+import com.info.javajediprimerapp.model.dto.author.AuthorDTO;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,7 +1,7 @@
 package com.info.javajediprimerapp.mapper.author;
 
 import com.info.javajediprimerapp.domain.Author;
-import com.info.javajediprimerapp.model.dto.AuthorDTO;
+import com.info.javajediprimerapp.model.dto.author.AuthorDTO;
 
 public interface AuthorMapper {
     Author authorDtoToAuthor(AuthorDTO author);

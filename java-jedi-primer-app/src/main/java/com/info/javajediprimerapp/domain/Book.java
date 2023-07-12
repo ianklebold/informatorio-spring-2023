@@ -26,13 +26,13 @@ public class Book {
     @Column(length = 100,columnDefinition = "varchar(100)",updatable = true,nullable = false)
     private String title;
 
-    @Column(length = 100,columnDefinition = "varchar(100)",updatable = true,nullable = false)
-    private String author;
-
     @Column(unique = true)
     private String isbn;
 
     private int numberPages;
+
+    @ManyToOne
+    private Author author;
 
     @Override
     public String toString() {
@@ -43,5 +43,10 @@ public class Book {
                 ", isbn='" + isbn + '\'' +
                 ", numberPages=" + numberPages +
                 '}';
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+        this.getAuthor().getBooks().add(this);
     }
 }

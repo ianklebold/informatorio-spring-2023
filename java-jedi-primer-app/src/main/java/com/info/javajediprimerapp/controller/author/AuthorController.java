@@ -2,7 +2,7 @@ package com.info.javajediprimerapp.controller.author;
 
 import com.info.javajediprimerapp.domain.Author;
 import com.info.javajediprimerapp.exceptions.NotFoundException;
-import com.info.javajediprimerapp.model.dto.AuthorDTO;
+import com.info.javajediprimerapp.model.dto.author.AuthorDTO;
 import com.info.javajediprimerapp.service.author.AuthorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

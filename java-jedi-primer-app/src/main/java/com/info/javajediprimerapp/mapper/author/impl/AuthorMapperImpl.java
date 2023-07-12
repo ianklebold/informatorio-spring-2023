@@ -2,7 +2,7 @@ package com.info.javajediprimerapp.mapper.author.impl;
 
 import com.info.javajediprimerapp.domain.Author;
 import com.info.javajediprimerapp.mapper.author.AuthorMapper;
-import com.info.javajediprimerapp.model.dto.AuthorDTO;
+import com.info.javajediprimerapp.model.dto.author.AuthorDTO;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

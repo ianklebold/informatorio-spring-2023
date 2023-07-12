@@ -1,4 +1,4 @@
-package com.info.javajediprimerapp.model.dto;
+package com.info.javajediprimerapp.model.dto.author;
 
 import lombok.*;
 
