@@ -44,8 +44,15 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> getAllBooks() {
-        return new ArrayList<>(bookMap.values());
+    public List<BookDTO> getAllBooks() {
+
+        List<BookDTO> bookDTOS = new ArrayList<>();
+
+        for (Book book:bookMap.values()) {
+            bookDTOS.add(bookMapper.bookToBookDTO(book));
+        }
+
+        return bookDTOS;
     }
 
     @Override
@@ -57,13 +64,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Optional<Book> updateBook(UUID uuidBook, Book bookUpdated) {
+    public Optional<BookDTO> updateBook(UUID uuidBook, BookDTO bookUpdated) {
         //Buscamos libro
         Book book = bookMap.get(uuidBook);
 
         if(book != null){
             updatingBook(book,bookUpdated);
-            return Optional.of(book);
+            return Optional.of(bookMapper.bookToBookDTO(book));
         }else {
             return Optional.empty();
         }
@@ -82,14 +89,18 @@ public class BookServiceImpl implements BookService {
         );
     }
 
-    private void updatingBook(Book book,Book bookUpdated){
+    private void updatingBook(Book book,BookDTO bookUpdated){
 
-        if (bookUpdated.getTitle() != null){
+        if (!bookUpdated.getTitle().isBlank()){
             book.setTitle(bookUpdated.getTitle());
         }
 
-        if (bookUpdated.getAuthor() != null){
-            book.setAuthor(bookUpdated.getAuthor());
+        if(bookUpdated.getNumberPages() > 0){
+            book.setNumberPages(bookUpdated.getNumberPages());
+        }
+
+        if (!bookUpdated.getIsbn().isBlank()){
+            book.setIsbn(bookUpdated.getIsbn());
         }
 
     }

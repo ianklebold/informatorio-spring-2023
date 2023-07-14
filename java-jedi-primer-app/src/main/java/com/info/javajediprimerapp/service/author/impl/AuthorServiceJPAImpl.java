@@ -96,4 +96,5 @@ public class AuthorServiceJPAImpl implements AuthorService {
             author.setDateOfBirth(authorUpdated.getDateOfBirth());
         }
     }
+
 }

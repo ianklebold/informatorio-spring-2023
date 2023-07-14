@@ -9,11 +9,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface BookService {
-    List<Book> getAllBooks();
+    List<BookDTO> getAllBooks();
 
     Book createBook(BookDTO book) throws NotFoundException;
 
-    Optional<Book> updateBook(UUID uuidBook, Book bookUpdated);
+    Optional<BookDTO> updateBook(UUID uuidBook, BookDTO bookUpdated);
 
     boolean deleteBook(UUID uuidBook);
 

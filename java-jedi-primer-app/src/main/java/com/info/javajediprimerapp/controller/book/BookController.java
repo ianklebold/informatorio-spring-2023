@@ -30,7 +30,7 @@ public class BookController {
 
     //GET --> Obtener un recurso
     @GetMapping()
-    public List<Book> getAllBooks(@RequestParam(required = false,name = "nameBook") String nameBook){
+    public List<BookDTO> getAllBooks(@RequestParam(required = false,name = "nameBook") String nameBook){
         log.info("Se esta haciendo una consulta por los libros");
         return bookService.getAllBooks();
     }
@@ -49,9 +49,9 @@ public class BookController {
 
     //PUT --> Actualizar un recurso
     @PutMapping("/{idBook}")
-    public ResponseEntity updateBook(@PathVariable(value = "idBook")UUID idBook,@RequestBody Book bookUpdated)
+    public ResponseEntity updateBook(@PathVariable(value = "idBook")UUID idBook,@RequestBody BookDTO bookUpdated)
             throws NotFoundException {
-        Optional<Book> book = bookService.updateBook(idBook,bookUpdated);
+        Optional<BookDTO> book = bookService.updateBook(idBook,bookUpdated);
 
         if(book.isEmpty()){
             log.warn("Libro no encontrado");

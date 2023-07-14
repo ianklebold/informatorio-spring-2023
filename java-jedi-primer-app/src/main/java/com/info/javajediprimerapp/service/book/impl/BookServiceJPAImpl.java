@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,9 +27,17 @@ public class BookServiceJPAImpl implements BookService {
     private final BookMapper bookMapper;
     private final AuthorRepository authorRepository;
 
+
     @Override
-    public List<Book> getAllBooks() {
-        return bookRepository.findAll(); //Traer todos los libros
+    public List<BookDTO> getAllBooks() {
+
+        List<BookDTO> bookDTOS = new ArrayList<>();
+
+        for (Book book:bookRepository.findAll()) {
+            bookDTOS.add(bookMapper.bookToBookDTO(book));
+        }
+
+        return bookDTOS;
     }
 
     @Override
@@ -47,7 +56,7 @@ public class BookServiceJPAImpl implements BookService {
     }
 
     @Override
-    public Optional<Book> updateBook(UUID uuidBook, Book bookUpdated) {
+    public Optional<BookDTO> updateBook(UUID uuidBook, BookDTO bookUpdated) {
         //Buscar libro por ID
         Optional<Book> bookOptional = bookRepository.findById(uuidBook);
 
@@ -55,20 +64,32 @@ public class BookServiceJPAImpl implements BookService {
             updatingBook(bookOptional.get(),bookUpdated);
             //Save --> Si existe entonces lo actualiza y sino lo crea.
             bookRepository.saveAndFlush(bookOptional.get());
-            return bookOptional;
+            return Optional.of(bookMapper.bookToBookDTO(bookOptional.get()));
         }else {
             return Optional.empty();
         }
     }
 
-    private void updatingBook(Book book,Book bookUpdated){
+    private void updatingBook(Book book,BookDTO bookUpdated){
 
-        if (bookUpdated.getTitle() != null){
+        if (!bookUpdated.getTitle().isBlank()){
             book.setTitle(bookUpdated.getTitle());
         }
 
-        if (bookUpdated.getAuthor() != null){
-            book.setAuthor(bookUpdated.getAuthor());
+        if (!bookUpdated.getIdAuthor().isBlank()){
+            Optional<Author> author = authorRepository.findById(UUID.fromString(bookUpdated.getIdAuthor()));
+
+            if (author.isPresent()){
+                book.setAuthor(author.get());
+            }
+        }
+
+        if(bookUpdated.getNumberPages() > 0){
+            book.setNumberPages(bookUpdated.getNumberPages());
+        }
+
+        if (!bookUpdated.getIsbn().isBlank()){
+            book.setIsbn(bookUpdated.getIsbn());
         }
 
     }
