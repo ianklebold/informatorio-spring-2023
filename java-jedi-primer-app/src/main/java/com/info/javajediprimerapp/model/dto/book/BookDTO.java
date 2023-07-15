@@ -2,6 +2,8 @@ package com.info.javajediprimerapp.model.dto.book;
 
 import lombok.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -12,4 +14,5 @@ public class BookDTO {
     private String isbn;
     private int numberPages;
     private String idAuthor;
+    private List<String> categoriesIds;
 }

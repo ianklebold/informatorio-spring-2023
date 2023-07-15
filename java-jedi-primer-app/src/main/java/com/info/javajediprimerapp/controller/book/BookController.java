@@ -3,6 +3,7 @@ package com.info.javajediprimerapp.controller.book;
 import com.info.javajediprimerapp.domain.Book;
 import com.info.javajediprimerapp.exceptions.NotFoundException;
 import com.info.javajediprimerapp.model.dto.book.BookDTO;
+import com.info.javajediprimerapp.model.dto.book.BookResponseDTO;
 import com.info.javajediprimerapp.service.book.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class BookController {
 
     //GET --> Obtener un recurso
     @GetMapping()
-    public List<BookDTO> getAllBooks(@RequestParam(required = false,name = "nameBook") String nameBook){
+    public List<BookResponseDTO> getAllBooks(@RequestParam(required = false,name = "nameBook") String nameBook){
         log.info("Se esta haciendo una consulta por los libros");
         return bookService.getAllBooks();
     }

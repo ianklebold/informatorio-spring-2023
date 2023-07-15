@@ -1,8 +1,10 @@
 package com.info.javajediprimerapp.bootstrap;
 
 import com.info.javajediprimerapp.domain.Book;
+import com.info.javajediprimerapp.domain.Category;
 import com.info.javajediprimerapp.model.csv.BookCsvRecord;
 import com.info.javajediprimerapp.repository.book.BookRepository;
+import com.info.javajediprimerapp.repository.category.CategoryRepository;
 import com.info.javajediprimerapp.service.csv.book.BookCsvService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,13 +24,35 @@ public class BootsrapData implements CommandLineRunner {
 
     private final BookRepository bookRepository;
 
+    private final CategoryRepository categoryRepository;
+
     private final BookCsvService bookCsvService;
 
     @Override
     public void run(String... args) throws Exception {
         log.info("Corriendo BootsrapData");
-
+        loadCategoryData();
         //loadBookData();
+    }
+
+    private void loadCategoryData(){
+        if (categoryRepository.count() == 0){
+            Category category1 = Category.builder()
+                    .uuid(UUID.randomUUID())
+                    .name("Ficción")
+                    .build();
+            categoryRepository.save(category1);
+            Category category2 = Category.builder()
+                    .uuid(UUID.randomUUID())
+                    .name("Misterio")
+                    .build();
+            categoryRepository.save(category2);
+            Category category3 = Category.builder()
+                    .uuid(UUID.randomUUID())
+                    .name("Romance")
+                    .build();
+            categoryRepository.save(category3);
+        }
     }
 
     /*
