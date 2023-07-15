@@ -1,9 +1,10 @@
 package com.info.javajediprimerapp.service.book.impl;
 
 import com.info.javajediprimerapp.domain.Book;
-import com.info.javajediprimerapp.mapper.author.AuthorMapper;
 import com.info.javajediprimerapp.mapper.book.BookMapper;
+import com.info.javajediprimerapp.mapper.book.BookResponseMapper;
 import com.info.javajediprimerapp.model.dto.book.BookDTO;
+import com.info.javajediprimerapp.model.dto.book.BookResponseDTO;
 import com.info.javajediprimerapp.service.book.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,13 @@ public class BookServiceImpl implements BookService {
 
     private final BookMapper bookMapper;
 
+    private final BookResponseMapper bookResponseMapper;
+
     @Autowired
-    public BookServiceImpl(BookMapper bookMapper) {
+    public BookServiceImpl(BookMapper bookMapper, BookResponseMapper bookResponseMapper) {
 
         this.bookMapper = bookMapper;
+        this.bookResponseMapper = bookResponseMapper;
 
         bookMap = new HashMap<>();
 
@@ -44,12 +48,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDTO> getAllBooks() {
+    public List<BookResponseDTO> getAllBooks() {
 
-        List<BookDTO> bookDTOS = new ArrayList<>();
+        List<BookResponseDTO> bookDTOS = new ArrayList<>();
 
         for (Book book:bookMap.values()) {
-            bookDTOS.add(bookMapper.bookToBookDTO(book));
+            bookDTOS.add(bookResponseMapper.bookToBookResponseDTO(book));
         }
 
         return bookDTOS;
