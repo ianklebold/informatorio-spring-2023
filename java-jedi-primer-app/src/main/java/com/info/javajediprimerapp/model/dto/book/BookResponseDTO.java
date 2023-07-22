@@ -1,8 +1,11 @@
 package com.info.javajediprimerapp.model.dto.book;
 
+import com.info.javajediprimerapp.domain.Review;
 import com.info.javajediprimerapp.model.dto.category.CategoryResponseDTO;
+import com.info.javajediprimerapp.model.dto.publisher.PublisherDTO;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -16,4 +19,6 @@ public class BookResponseDTO {
     private int numberPages;
     private String nombreAuthor;
     private List<CategoryResponseDTO> categoryResponseDTOS;
+    private PublisherDTO publisherDTO;
+    private List<Review> reviews = new ArrayList<>();
 }

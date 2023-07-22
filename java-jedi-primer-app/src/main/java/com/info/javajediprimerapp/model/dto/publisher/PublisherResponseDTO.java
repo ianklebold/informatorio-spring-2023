@@ -1,9 +1,7 @@
 package com.info.javajediprimerapp.model.dto.publisher;
 
-import com.info.javajediprimerapp.model.dto.review.ReviewDTO;
 import lombok.*;
 
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor

@@ -34,6 +34,12 @@ public class Book {
     @Column(unique = true)
     private String isbn;
 
+    @OneToMany(mappedBy = "book")
+    private List<Review> reviews;
+
+    @ManyToOne
+    private Publisher publisher;
+
     private int numberPages;
 
     @ManyToMany
