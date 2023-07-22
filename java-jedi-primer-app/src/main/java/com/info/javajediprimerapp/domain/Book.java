@@ -34,7 +34,7 @@ public class Book {
     @Column(unique = true)
     private String isbn;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany()
     private List<Review> reviews;
 
     @ManyToOne

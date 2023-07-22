@@ -34,7 +34,4 @@ public class Review {
     private CalificationEnum calification;
 
     private LocalDateTime dateOfCreation;
-
-    @ManyToOne
-    private Book book;
 }
