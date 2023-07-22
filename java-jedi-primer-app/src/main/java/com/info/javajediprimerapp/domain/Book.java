@@ -34,8 +34,9 @@ public class Book {
     @Column(unique = true)
     private String isbn;
 
-    @OneToMany(mappedBy = "book")
-    private List<Review> reviews;
+    @Builder.Default
+    @OneToMany(cascade = {CascadeType.REMOVE})
+    private List<Review> reviews = new ArrayList<>();
 
     @ManyToOne
     private Publisher publisher;
@@ -46,6 +47,11 @@ public class Book {
     @JoinTable(name = "book_category",joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories = new ArrayList<>();
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+        publisher.getBooks().add(this);
+    }
 
     public void setAuthor(Author author) {
         this.author = author;

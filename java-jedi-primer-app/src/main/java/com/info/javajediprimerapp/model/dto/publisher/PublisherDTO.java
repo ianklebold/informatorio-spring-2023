@@ -1,6 +1,9 @@
 package com.info.javajediprimerapp.model.dto.publisher;
 
+import com.info.javajediprimerapp.model.dto.location.LocationDTO;
 import lombok.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,4 +14,5 @@ public class PublisherDTO {
     private String name;
     private String cellphone;
     private String webSite;
+    private LocationDTO locationDTO;
 }

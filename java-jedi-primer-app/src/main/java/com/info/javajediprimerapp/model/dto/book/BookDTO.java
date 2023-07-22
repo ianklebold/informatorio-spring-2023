@@ -1,7 +1,7 @@
 package com.info.javajediprimerapp.model.dto.book;
 
-import com.info.javajediprimerapp.domain.Review;
 import com.info.javajediprimerapp.model.dto.publisher.PublisherDTO;
+import com.info.javajediprimerapp.model.dto.review.ReviewDTO;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -19,5 +19,5 @@ public class BookDTO {
     private String idAuthor;
     private List<String> listCategoriesIds = new ArrayList<>();
     private PublisherDTO publisherDTO;
-    private List<Review> reviews = new ArrayList<>();
+    private List<ReviewDTO> reviews = new ArrayList<>();
 }

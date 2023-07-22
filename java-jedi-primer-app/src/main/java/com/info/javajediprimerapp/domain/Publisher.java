@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,6 +36,7 @@ public class Publisher {
     @OneToOne
     private Location location;
 
+    @Builder.Default
     @OneToMany(mappedBy = "publisher")
-    private List<Book> books;
+    private List<Book> books = new ArrayList<>();
 }
