@@ -19,5 +19,5 @@ public class BookDTO {
     private String idAuthor;
     private List<String> listCategoriesIds = new ArrayList<>();
     private PublisherDTO publisherDTO;
-    private List<ReviewDTO> reviews = new ArrayList<>();
+    private List<ReviewDTO> reviewsDTO = new ArrayList<>();
 }

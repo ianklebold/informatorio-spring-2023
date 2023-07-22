@@ -33,6 +33,6 @@ public class Author {
 
     private LocalDateTime dateOfBirth;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author",cascade = {CascadeType.REMOVE})
     private List<Book> books = new ArrayList<>();
 }

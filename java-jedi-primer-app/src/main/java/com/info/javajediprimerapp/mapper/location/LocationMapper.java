@@ -5,4 +5,6 @@ import com.info.javajediprimerapp.model.dto.location.LocationDTO;
 
 public interface LocationMapper {
     LocationDTO locationToLocationDTO(Location location);
+
+    Location locationDTOToLocation(LocationDTO locationDTO);
 }

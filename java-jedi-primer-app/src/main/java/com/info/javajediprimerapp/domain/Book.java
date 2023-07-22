@@ -34,8 +34,9 @@ public class Book {
     @Column(unique = true)
     private String isbn;
 
-    @OneToMany()
-    private List<Review> reviews;
+    @Builder.Default
+    @OneToMany(cascade = {CascadeType.REMOVE})
+    private List<Review> reviews = new ArrayList<>();
 
     @ManyToOne
     private Publisher publisher;
@@ -50,6 +51,11 @@ public class Book {
     public void setAuthor(Author author) {
         this.author = author;
         author.getBooks().add(this);
+    }
+
+    public void setPublisher(Publisher publisher){
+        this.publisher = publisher;
+        publisher.getBooks().add(this);
     }
 
     public void addCategories(Category category){

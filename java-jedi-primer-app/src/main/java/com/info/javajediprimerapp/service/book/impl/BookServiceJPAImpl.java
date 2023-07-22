@@ -1,8 +1,6 @@
 package com.info.javajediprimerapp.service.book.impl;
 
-import com.info.javajediprimerapp.domain.Author;
-import com.info.javajediprimerapp.domain.Book;
-import com.info.javajediprimerapp.domain.Category;
+import com.info.javajediprimerapp.domain.*;
 import com.info.javajediprimerapp.exceptions.NotFoundException;
 import com.info.javajediprimerapp.mapper.book.BookMapper;
 import com.info.javajediprimerapp.mapper.book.BookResponseMapper;
@@ -12,6 +10,9 @@ import com.info.javajediprimerapp.repository.author.AuthorRepository;
 import com.info.javajediprimerapp.repository.book.BookRepository;
 import com.info.javajediprimerapp.repository.category.CategoryRepository;
 import com.info.javajediprimerapp.service.book.BookService;
+import com.info.javajediprimerapp.service.publisher.PublisherService;
+import com.info.javajediprimerapp.service.review.ReviewService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,10 @@ public class BookServiceJPAImpl implements BookService {
 
     private final CategoryRepository categoryRepository;
 
+    private final PublisherService publisherService;
+
+    private final ReviewService reviewService;
+
     @Override
     public List<BookResponseDTO> getAllBooks() {
 
@@ -48,6 +53,7 @@ public class BookServiceJPAImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public Book createBook(BookDTO book) throws NotFoundException {
 
         Book newBook = bookMapper.bookDTOtoBook(book);
@@ -64,6 +70,15 @@ public class BookServiceJPAImpl implements BookService {
 
         // Relacion BOOK - CATEGORY
         updatingCategoriesBook(newBook,book);
+
+        //Relacion BOOK - Publisher
+        Publisher publisher = publisherService.createPublisher(book.getPublisherDTO());
+        newBook.setPublisher(publisher);
+
+        //Relacion BOOK - Review
+        List<Review> reviews = reviewService.createAllOfReviews(book.getReviewsDTO());
+        newBook.setReviews(reviews);
+
         return bookRepository.save(newBook);
     }
 
