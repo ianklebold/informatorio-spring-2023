@@ -25,20 +25,20 @@ public class Book {
     @Column(length = 36,columnDefinition = "varchar(36)",updatable = false,nullable = false)
     private UUID uuid;
 
-    @Column(length = 100,columnDefinition = "varchar(100)",updatable = true,nullable = false)
+    @Column(length = 1000,columnDefinition = "varchar(1000)",updatable = true,nullable = false,unique = false)
     private String title;
 
     @ManyToOne
     private Author author;
 
-    @Column(unique = true)
+    @Column(unique = false)
     private String isbn;
 
     @Builder.Default
     @OneToMany(cascade = {CascadeType.REMOVE})
     private List<Review> reviews = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne()
     private Publisher publisher;
 
     private int numberPages;

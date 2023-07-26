@@ -1,6 +1,7 @@
 package com.info.javajediprimerapp.service.csv.book.impl;
 
-import com.info.javajediprimerapp.model.csv.BookCsvRecord;
+import com.info.javajediprimerapp.model.csv.book.BookCsvRecord;
+import com.info.javajediprimerapp.model.csv.book.BookCsvV2Record;
 import com.info.javajediprimerapp.service.csv.book.BookCsvService;
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -15,10 +16,10 @@ import java.util.List;
 @Service
 public class BookCsvServiceImpl implements BookCsvService {
     @Override
-    public List<BookCsvRecord> convertCSV(File file) throws FileNotFoundException {
-        List<BookCsvRecord> bookCsvRecordList =
-                new CsvToBeanBuilder<BookCsvRecord>(new FileReader(file))
-                        .withType(BookCsvRecord.class)
+    public List<BookCsvV2Record> convertCSV(File file) throws FileNotFoundException {
+        List<BookCsvV2Record> bookCsvRecordList =
+                new CsvToBeanBuilder<BookCsvV2Record>(new FileReader(file))
+                        .withType(BookCsvV2Record.class)
                         .build()
                         .parse();
         log.info("Conviertiendo CSV a lista de Libros");

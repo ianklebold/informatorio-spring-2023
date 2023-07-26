@@ -24,10 +24,10 @@ public class Review {
     @Column(length = 36,columnDefinition = "varchar(36)",updatable = false,nullable = false)
     private UUID uuid;
 
-    @Column(length = 50,columnDefinition = "varchar(50)",updatable = true,nullable = false,unique = true)
+    @Column(length = 1000,columnDefinition = "varchar(1000)",updatable = true,nullable = false,unique = true)
     private String title;
 
-    @Column(length = 255,columnDefinition = "varchar(255)",updatable = true,nullable = false,unique = true)
+    @Column(length = 3000,columnDefinition = "varchar(3000)",updatable = true,nullable = false,unique = true)
     private String content;
 
     @Enumerated(EnumType.STRING)
