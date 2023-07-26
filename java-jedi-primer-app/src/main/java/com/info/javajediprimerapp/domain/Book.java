@@ -31,7 +31,6 @@ public class Book {
     @ManyToOne
     private Author author;
 
-    @Column(unique = true)
     private String isbn;
 
     @Builder.Default
@@ -43,6 +42,7 @@ public class Book {
 
     private int numberPages;
 
+    @Builder.Default
     @ManyToMany
     @JoinTable(name = "book_category",joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
