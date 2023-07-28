@@ -12,6 +12,7 @@ import com.info.javajediprimerapp.repository.publisher.PublisherRepository;
 import com.info.javajediprimerapp.repository.reviews.ReviewRepository;
 import com.info.javajediprimerapp.service.csv.author.AuthorCsvService;
 import com.info.javajediprimerapp.service.csv.book.BookCsvService;
+import com.info.javajediprimerapp.service.review.ReviewService;
 import com.info.javajediprimerapp.service.utils.csv.UtilsCsvService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +47,8 @@ public class BootsrapData implements CommandLineRunner {
     private final PublisherRepository publisherRepository;
 
     private final AuthorRepository authorRepository;
+
+    private final ReviewService reviewService;
 
 
     @Override
@@ -126,41 +129,43 @@ public class BootsrapData implements CommandLineRunner {
                     .isbn(bookCsvV2Record.getIsbn())
                     .title(bookCsvV2Record.getTitle())
                     .numberPages(Integer.parseInt(bookCsvV2Record.getNumberPages()))
-                    .reviews(
-                            reviewRepository.saveAll(
-                                    List.of(
-                                            Review.builder()
-                                                    .uuid(UUID.randomUUID())
-                                                    .title(bookCsvV2Record.getTitleReview())
-                                                    .content(bookCsvV2Record.getContentReview())
-                                                    .calification(CalificationEnum.valueOf(bookCsvV2Record.getCalification()))
-                                                    .dateOfCreation(LocalDateTime.now()).build()
-                                    )
-                            )
-
-                    )
-                    .publisher(
-                            publisherRepository.save(
-                                    Publisher
-                                            .builder()
-                                            .uuid(UUID.randomUUID())
-                                            .name(bookCsvV2Record.getNamePublisher())
-                                            .location(Location
-                                                    .builder()
-                                                    .uuid(UUID.randomUUID())
-                                                    .address(bookCsvV2Record.getLocationAddress())
-                                                    .city(bookCsvV2Record.getCityAddress())
-                                                    .country(bookCsvV2Record.getCountryAddress())
-                                                    .build()
-                                            )
-                                            .webSite(bookCsvV2Record.getWebsitePublisher())
-                                            .cellphone(bookCsvV2Record.getCellphonePublisher())
-                                            .build()
-                            )
-                    )
+                    .reviews(saveAllReviews(bookCsvV2Record))
+                    .publisher(savePublisher(bookCsvV2Record))
                     .author(author)
                     .categories(List.of(categoryRepository.findByNameIgnoreCase(bookCsvV2Record.getNameCategory()).get()))
                     .build();
     }
 
+    private List<Review> saveAllReviews(BookCsvV2Record bookCsvV2Record){
+        return reviewRepository.saveAll(
+                List.of(
+                        Review.builder()
+                                .uuid(UUID.randomUUID())
+                                .title(bookCsvV2Record.getTitleReview())
+                                .content(bookCsvV2Record.getContentReview())
+                                .calification(CalificationEnum.valueOf(bookCsvV2Record.getCalification()))
+                                .dateOfCreation(LocalDateTime.now()).build()
+                )
+        );
+    }
+
+    private Publisher savePublisher(BookCsvV2Record bookCsvV2Record){
+        return  publisherRepository.save(
+                Publisher
+                        .builder()
+                        .uuid(UUID.randomUUID())
+                        .name(bookCsvV2Record.getNamePublisher())
+                        .location(Location
+                                .builder()
+                                .uuid(UUID.randomUUID())
+                                .address(bookCsvV2Record.getLocationAddress())
+                                .city(bookCsvV2Record.getCityAddress())
+                                .country(bookCsvV2Record.getCountryAddress())
+                                .build()
+                        )
+                        .webSite(bookCsvV2Record.getWebsitePublisher())
+                        .cellphone(bookCsvV2Record.getCellphonePublisher())
+                        .build()
+        );
+    }
 }
