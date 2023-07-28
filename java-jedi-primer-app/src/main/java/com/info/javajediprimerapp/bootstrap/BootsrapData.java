@@ -3,7 +3,6 @@ package com.info.javajediprimerapp.bootstrap;
 import com.info.javajediprimerapp.domain.*;
 import com.info.javajediprimerapp.enumeration.CalificationEnum;
 import com.info.javajediprimerapp.model.csv.author.AuthorCsvRecord;
-import com.info.javajediprimerapp.model.csv.book.BookCsvRecord;
 import com.info.javajediprimerapp.model.csv.book.BookCsvV2Record;
 import com.info.javajediprimerapp.repository.author.AuthorRepository;
 import com.info.javajediprimerapp.repository.book.BookRepository;
@@ -12,7 +11,6 @@ import com.info.javajediprimerapp.repository.publisher.PublisherRepository;
 import com.info.javajediprimerapp.repository.reviews.ReviewRepository;
 import com.info.javajediprimerapp.service.csv.author.AuthorCsvService;
 import com.info.javajediprimerapp.service.csv.book.BookCsvService;
-import com.info.javajediprimerapp.service.review.ReviewService;
 import com.info.javajediprimerapp.service.utils.csv.UtilsCsvService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,8 +45,6 @@ public class BootsrapData implements CommandLineRunner {
     private final PublisherRepository publisherRepository;
 
     private final AuthorRepository authorRepository;
-
-    private final ReviewService reviewService;
 
 
     @Override
