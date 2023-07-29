@@ -48,7 +48,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookResponseDTO> getAllBooks() {
+    public List<BookResponseDTO> getAllBooks(String title) {
 
         List<BookResponseDTO> bookDTOS = new ArrayList<>();
 

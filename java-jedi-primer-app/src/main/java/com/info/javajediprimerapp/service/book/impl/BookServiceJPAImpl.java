@@ -8,12 +8,14 @@ import com.info.javajediprimerapp.model.dto.book.BookDTO;
 import com.info.javajediprimerapp.model.dto.book.BookResponseDTO;
 import com.info.javajediprimerapp.repository.author.AuthorRepository;
 import com.info.javajediprimerapp.repository.book.BookRepository;
+import com.info.javajediprimerapp.repository.book.projection.ProjectionOnlyTitleBook;
 import com.info.javajediprimerapp.repository.category.CategoryRepository;
 import com.info.javajediprimerapp.service.book.BookService;
 import com.info.javajediprimerapp.service.publisher.PublisherService;
 import com.info.javajediprimerapp.service.review.ReviewService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -41,15 +43,31 @@ public class BookServiceJPAImpl implements BookService {
     private final ReviewService reviewService;
 
     @Override
-    public List<BookResponseDTO> getAllBooks() {
-
+    public List<BookResponseDTO> getAllBooks(String title) {
+        List<Book> bookList;
         List<BookResponseDTO> bookDTOS = new ArrayList<>();
 
-        for (Book book:bookRepository.findAll()) {
+        if (StringUtils.isNotEmpty(title)){
+            bookList = bookRepository.findBooksWithAuthorBornInTheYear80sWithAlmostOneReviewWhit3Stars();
+            //List<String> titleBooks = getTitlesBooks( bookRepository.findBooksByTitleStartingWithQueryNativeNamedProjection(title+"%") );
+        }else {
+            bookList = bookRepository.findAll();
+        }
+
+        for (Book book:bookList) {
             bookDTOS.add(bookResponseMapper.bookToBookResponseDTO(book));
         }
 
         return bookDTOS;
+    }
+
+    private List<String> getTitlesBooks(List<ProjectionOnlyTitleBook> projectionOnlyTitleBooks){
+        List<String> titleBooks = new ArrayList<>();
+
+        for (ProjectionOnlyTitleBook projection:projectionOnlyTitleBooks) {
+            titleBooks.add( projection.getTitle() );
+        }
+        return titleBooks;
     }
 
     @Override

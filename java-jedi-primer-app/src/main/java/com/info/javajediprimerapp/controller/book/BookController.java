@@ -31,9 +31,9 @@ public class BookController {
 
     //GET --> Obtener un recurso
     @GetMapping()
-    public List<BookResponseDTO> getAllBooks(@RequestParam(required = false,name = "nameBook") String nameBook){
+    public List<BookResponseDTO> getAllBooks(@RequestParam(required = false,name = "title") String title){
         log.info("Se esta haciendo una consulta por los libros");
-        return bookService.getAllBooks();
+        return bookService.getAllBooks(title);
     }
 
     //POST --> Crear un recurso

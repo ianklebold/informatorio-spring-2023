@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface BookService {
-    List<BookResponseDTO> getAllBooks();
+    List<BookResponseDTO> getAllBooks(String title);
 
     Book createBook(BookDTO book) throws NotFoundException;
 
