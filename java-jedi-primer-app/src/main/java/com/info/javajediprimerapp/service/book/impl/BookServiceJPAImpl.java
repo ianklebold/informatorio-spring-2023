@@ -8,12 +8,14 @@ import com.info.javajediprimerapp.model.dto.book.BookDTO;
 import com.info.javajediprimerapp.model.dto.book.BookResponseDTO;
 import com.info.javajediprimerapp.repository.author.AuthorRepository;
 import com.info.javajediprimerapp.repository.book.BookRepository;
+import com.info.javajediprimerapp.repository.book.projection.TitleOnly;
 import com.info.javajediprimerapp.repository.category.CategoryRepository;
 import com.info.javajediprimerapp.service.book.BookService;
 import com.info.javajediprimerapp.service.publisher.PublisherService;
 import com.info.javajediprimerapp.service.review.ReviewService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -41,15 +43,30 @@ public class BookServiceJPAImpl implements BookService {
     private final ReviewService reviewService;
 
     @Override
-    public List<BookResponseDTO> getAllBooks() {
-
+    public List<BookResponseDTO> getAllBooks(String title) {
+        List<Book> books;
         List<BookResponseDTO> bookDTOS = new ArrayList<>();
 
-        for (Book book:bookRepository.findAll()) {
+        if (StringUtils.isNotEmpty(title)){
+            books = bookRepository.findBooksByTitleStartingWithTitleWithQueryNamedNative(title);
+        }else {
+            books = bookRepository.findAll();
+        }
+
+        for (Book book:books) {
             bookDTOS.add(bookResponseMapper.bookToBookResponseDTO(book));
         }
 
         return bookDTOS;
+    }
+
+    private List<String> getOnlyTitles(List<TitleOnly> titles){
+        List<String> onlyTitles = new ArrayList<>();
+
+        for (TitleOnly title: titles) {
+            onlyTitles.add(title.getTitle());
+        }
+        return onlyTitles;
     }
 
     @Override
